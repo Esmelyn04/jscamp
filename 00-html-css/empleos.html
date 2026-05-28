@@ -31,7 +31,7 @@
     </header>
 
     <main>
-        <section class="Jobs-search">
+        <section class="jobs-search">
             <h1>Encuentra tu proximo trabajo</h1>
             <p>Explorar miles de oportunidades en el sector tecnologico.</p>
 
@@ -81,37 +81,59 @@
             </form>
         </section>
 
-        <section>
-            <h2>Resultados de la busqueda</h2>
-            <div>
-                <h3>Ingeniero de Software</h3>
-                <p>Tech Solutions. | Remoto</p>
-                <p>Buscamos un ingeniero de software con experiencia en desarrolo web y conocimientos en Javascript, React y Node.js. El candidato ideal debe ser capaz de trabajar en equipo y tener buenas habilidades de comunicacion.</p>
-                <button type="submit">Aplicar</button>
-            </div>
-            <div>
-                <h3>Analista de Datos</h3>
-                <p>Data Driven Co. | Ciudad de Mexico</p>
-                <p>Buscamos un ingeniero de software con experiencia en desarrolo web y conocimientos en Javascript, React y Node.js. El candidato ideal debe ser capaz de trabajar en equipo y tener buenas habilidades de comunicacion.</p>
-                <button type="submit">Aplicar</button>
-            </div>
-            <div>
-                <h3>Desarrollador de Aplicaciones Moviles</h3>
-                <p>Mobile Apps Ltd. | Miami</p>
-                <p>Buscamos un ingeniero de software con experiencia en desarrolo web y conocimientos en Javascript, React y Node.js. El candidato ideal debe ser capaz de trabajar en equipo y tener buenas habilidades de comunicacion.</p>
-                <button type="submit">Aplicar</button>
-            </div>
-            <div>
-                <h3>Ingeniero de DevOps</h3>
-                <p>Cloud Services SA | Remoto</p>
-                <p>Buscamos un ingeniero de software con experiencia en desarrolo web y conocimientos en Javascript, React y Node.js. El candidato ideal debe ser capaz de trabajar en equipo y tener buenas habilidades de comunicacion.</p>
-                <button type="submit">Aplicar</button>
-            </div>
+        <h2>Resultados de la busqueda</h2>
+
+        <div class="jobs-listings">
+            <article class="job-listing-card">
+                <div>
+                    <h3>Ingeniero de Software</h3>
+                    <small>Tech Solutions. | Remoto</small>
+                    <p>Buscamos un ingeniero de software con experiencia en desarrollo web y conocimientos en JavaScript, React y Node.js. El candidato ideal debe ser capaz de trabajar en equipo y tener buenas habilidades de comunicación.</p>
+                </div>
+                <button class="button-apply-job" id="boton-importante">Aplicar</button>
+            </article>
             
-        </section>
+            <article class="job-listing-card">
+                <div>
+                    <h3>Analista de Datos</h3>
+                    <small>Data Driven Co. | Ciudad de Mexico</small>
+                    <p>Estamos buscando un analista de datos con experiencia en el manejo de grandes conjuntos de datos y herramientas de visualización. Se requiere conocimiento en SQL, Python y R.</p>
+                </div>
+                <button class="button-apply-job" id="boton-importante">Aplicar</button>
+            </article>
+
+            <article class="job-listing-card">
+                <div>
+                    <h3>Desarrollador de Aplicaciones Moviles</h3>
+                    <small>Mobile Apps Ltd. | Miami</small>
+                    <p>Buscamos un desarrollador de aplicaciones móviles con experiencia en iOS y/o Android. El candidato debe tener conocimientos en Swift, Kotlin y el desarrollo de interfaces de usuario.</p>
+                </div>
+                <button class="button-apply-job" id="boton-importante">Aplicar</button>
+            </article>
+            
+            <article class="job-listing-card">
+                <div>
+                    <h3>Ingeniero de DevOps</h3>
+                    <small>Cloud Services SA | Remoto</small>
+                    <p>Estamos buscando un ingeniero de DevOps con experiencia en la gestión de infraestructuras en la nube, automatización de procesos y herramientas de integración continua. Se requiere conocimiento en AWS, Azure o GCP.</p>
+                </div>
+                <button class="button-apply-job" id="boton-importante">Aplicar</button>
+            </article>    
+        </div>
+
+        <nav class="pagination">
+            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg></a>
+            <a class="is-active" href="#">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 6l6 6l-6 6" /></svg></a>
+        </nav>
+
     </main>
 
-    <footer>
+    <footer style="padding-bottom: 2000px;">
         <small>&copy; 2025 Devjobs. Todos los derechos reservados</small>
 
     </footer>

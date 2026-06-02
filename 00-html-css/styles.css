@@ -456,6 +456,14 @@ article {
     
   }
 }
-#boton-importante {
+/* #boton-importante {
   background: #09f;
+} */
+
+.button-apply-job {
+  background: #09f;
+
+  &.is-applied {
+    background: #4caf50;
+  }
 }

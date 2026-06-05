@@ -37,7 +37,7 @@
             <h1>Encuentra tu proximo trabajo</h1>
             <p>Explorar miles de oportunidades en el sector tecnologico.</p>
 
-            <form role="search">
+            <form role="search" id="empleos-search-form">
                 <div class="search-bar">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
@@ -46,32 +46,33 @@
                         <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
                         <path d="M21 21l-6 -6" />
                     </svg>
-                    <input required type="text" placeholder="Buscar trabajos, empresas o habilidades">
+                    <input  id="empleos-search-input" required type="text" placeholder="Buscar trabajos, empresas o habilidades">
                 </div>
             
                 <div class="search-filters">
-                    <select name="tecnology" id="tecnology">
+                    <select name="tecnology" id="filter-tecnology">
                         <option disabled selected value>Tecnologia</option>
+                        <!-- <optgroup label="Tecnologías populares"></optgroup> -->
                         <option value="Python">JavaScrip</option>
                         <option value="JavaScrip">Python</option>
                         <option value="JavaScrip">Java</option>
                         <option value="JavaScrip">React</option>
-                        <optio}n value="JavaScrip">Node.js</option>
+                        <option value="JavaScrip">Node.js</option>
                     </select>
-                    <select name="location" id="location">
+                    <select name="location" id="filter-location">
                         <option disabled selected value>Ubication</option>
                         <option value="remoto">Remoto</option>
                         <option value="nyc">New York City</option>
-                        <option value="sf">San Francisco</option>
-                        <option value="hs">Houston</option>
+                        <option value="san francisco">San Francisco</option>
+                        <option value="houston">Houston</option>
                     </select>
-                    <select name="contrato" id="contrato">
+                    <select name="job-type" id="filter-job-type">
                         <option disabled selected value>Tipo de contrato</option>
                         <option value="fullTime">Full Time</option>
                         <option value="partTime">Part Time</option>
                         <option value="contrato">Contract</option>
                     </select>
-                    <select name=Experiencia" id="Experiencia">
+                    <select name=experience-level" id="filter-experience-level">
                         <option disabled selected value>Experiencia</option>
                         <option value="inter">Intership</option>
                         <option value="junior">Junior</option>
@@ -81,6 +82,8 @@
                     </select>
                 </div>
             </form>
+
+            <span id="filter-selected-value"></span>
         </section>
 
         <h2>Resultados de la busqueda</h2>

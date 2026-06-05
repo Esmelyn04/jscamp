@@ -1,3 +1,4 @@
+// // ways to Add event to a element
 // querySelector selected only the first button with this id
 
 // const boton = document.querySelector('#boton-importante')
@@ -25,10 +26,38 @@
 // })
 
 
+
+// // More event examples
+// const searchInput = document.querySelector('#empleos-search-input')
+// 
+// searchInput.addEventListener('input', () => {
+//     // console.log(searchInput.value)
+//     })
+// 
+// const searchForm = document.getElementById('empleos-search-form')
+// searchForm.addEventListener('submit', (event) => {
+//     event.preventDefault()
+//     console.log('submit')
+// })
+// 
+// 
+// document.addEventListener('keydown', (event) => {
+//     // console.log('key pressed: ' + event.key)
+//     // console.log("key pressed shift? " + event.shiftKey)
+//     // console.log("key pressed ctrl? " + event.ctrlKey)
+//     // console.log('key pressed alt? ' + event.altKey)
+// })
+
+
 const jobsListingSection = document.querySelector('.jobs-listings')
 
-jobsListingSection.addEventListener('click', function(event) {
-    console.log('click')
+// jobsListingSection.addEventListener('click', function(event) {
+//     // console.log('click')
+//     const element = event.target
+
+// "Optional Chaining" '?' prevent console errors if element doesn't exist 
+jobsListingSection?.addEventListener('click', function(event) {
+    // console.log('click')
     const element = event.target
 
     if(element.classList.contains('button-apply-job')) {
@@ -38,3 +67,18 @@ jobsListingSection.addEventListener('click', function(event) {
     }
     
 })
+
+const filter = document.querySelector('#filter-location')
+const message = document.querySelector('#filter-selected-value')
+
+filter.addEventListener('change', () => {
+    const selectedValue = filter.value
+    // console.log(selectedValue)
+
+    if (selectedValue) {
+        message.textContent = `Has seleccionado: ${selectedValue}`
+    } else {
+        mensaje.textContent = ''
+    }
+})
+

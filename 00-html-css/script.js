@@ -1,4 +1,4 @@
-// // ways to Add event to a element
+// // Others ways to Add event to a element
 // querySelector selected only the first button with this id
 
 // const boton = document.querySelector('#boton-importante')
@@ -70,15 +70,30 @@ jobsListingSection?.addEventListener('click', function(event) {
 
 const filter = document.querySelector('#filter-location')
 const message = document.querySelector('#filter-selected-value')
+const jobs = document.querySelectorAll('.job-listing-card')
 
 filter.addEventListener('change', () => {
     const selectedValue = filter.value
-    // console.log(selectedValue)
+    console.log(selectedValue)
 
     if (selectedValue) {
         message.textContent = `Has seleccionado: ${selectedValue}`
     } else {
         mensaje.textContent = ''
     }
+
+    jobs.forEach(job => {
+        // const jobLocation = job.dataset.location
+        const jobLocation = job.getAttribute('data-location')
+
+        console.log("modalidad= " + jobLocation)
+        
+        if (selectedValue === '' || selectedValue === jobLocation) {
+            job.style.display = 'flex'
+        } else {
+            job.style.display = 'none'
+        }
+    })
 })
 
+    

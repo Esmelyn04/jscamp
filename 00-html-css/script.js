@@ -85,14 +85,19 @@ filter.addEventListener('change', () => {
     jobs.forEach(job => {
         // const jobLocation = job.dataset.location
         const jobLocation = job.getAttribute('data-location')
+        const isShown = selectedValue === '' || selectedValue === jobLocation
 
-        console.log("modalidad= " + jobLocation)
-        
-        if (selectedValue === '' || selectedValue === jobLocation) {
-            job.style.display = 'flex'
-        } else {
-            job.style.display = 'none'
-        }
+        job.classList.toggle('is-hidden', !isShown)
+
+
+        // // using if statement works fine but using .toggle() improve our code 
+        // if (selectedValue === '' || selectedValue === jobLocation) {
+        //     // job.style.display = 'flex' // it's recommended to do not apply style directly to the element.  
+        //     job.classList.remove('is-hidden')
+        // } else {
+        //     // job.style.display = 'none'
+        //     job/classList.add('is-hidden')
+        // }
     })
 })
 

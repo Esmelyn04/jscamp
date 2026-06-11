@@ -70,11 +70,13 @@ jobsListingSection?.addEventListener('click', function(event) {
 
 const filter = document.querySelector('#filter-location')
 const message = document.querySelector('#filter-selected-value')
-const jobs = document.querySelectorAll('.job-listing-card')
+
 
 filter.addEventListener('change', () => {
+    const jobs = document.querySelectorAll('.job-listing-card')
     const selectedValue = filter.value
-    console.log(selectedValue)
+    // console.log(selectedValue)
+    console.log(`Modalidad: ${selectedValue}`)
 
     if (selectedValue) {
         message.textContent = `Has seleccionado: ${selectedValue}`
@@ -83,8 +85,8 @@ filter.addEventListener('change', () => {
     }
 
     jobs.forEach(job => {
-        // const jobLocation = job.dataset.location
-        const jobLocation = job.getAttribute('data-location')
+        // const jobLocation = job.dataset.location 
+        const jobLocation = job.getAttribute('data-modalidad')
         const isShown = selectedValue === '' || selectedValue === jobLocation
 
         job.classList.toggle('is-hidden', !isShown)
@@ -101,4 +103,40 @@ filter.addEventListener('change', () => {
     })
 })
 
-    
+// fetch("./data.json")
+//     .then(response => {
+//         console.log(response.ok)
+//         console.log(response.status)
+//         return response.text()
+//     }).then(jobs => {
+//         console.log(jobs)
+//     })
+
+console.log('antes del fetch')
+const container = document.querySelector(".jobs-listings")
+fetch("./data.json")
+    .then(response => {
+        // return response
+        return response.json()   
+    })
+    .then(jobs => {
+        console.log(jobs)
+        jobs.forEach(job => {
+            const article = document.createElement('article')
+
+            article.className = 'job-listing-card'
+            article.dataset.modalidad = job.data.modalidad
+            article.dataset.technology = job.data.technology
+            article.dataset.nivel = job.data.nivel
+
+            article.innerHTML = `
+                <div>
+                    <h3>${job.titulo}</h3>
+                    <small>${job.empresa} | ${job.ubicacion}</small>
+                    <p>${job.descripcion}</p>
+                </div>
+                <button class="button-apply-job">Aplicar</button>`
+
+            container.appendChild(article)
+        })
+    })

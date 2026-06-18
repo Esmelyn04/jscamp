@@ -6,8 +6,9 @@
     <meta content="Encuentra las mejores ofertas de trabajo para desarrolladores en DevJobs.">
     <title>DevJobs - Empleos</title>
     <link rel="stylesheet" href="styles.css">
-    <script  type="module" src="./script.js"></script>
+    <script  type="module" src="./main.js"></script>
 </head>
+
 <body>
     <header>
         <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brackets-angle"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 4l-5 8l5 8" /><path d="M16 4l5 8l-5 8" /></svg> -->
@@ -25,8 +26,24 @@
         </nav>
 
         <div>
-            <button>Subir CV</button>
-            <a href=""><img src="" alt="">img</a>
+            <!-- <button>Subir CV</button> -->
+             <!-- <a href="">Publicar un empleo</a> -->
+            <!-- <a href=""><img src="" alt="">img</a> -->
+
+            <devjobs-avatar service="x" username="minudev" size="32"></devjobs-avatar>
+            <devjobs-avatar service="github" username="minudev" size="24"></devjobs-avatar>
+            <devjobs-avatar service="google" username="minudev" size="24"></devjobs-avatar>
+
+            <devjobs-avatar service="google" username="google.com" size="32">
+            </devjobs-avatar>
+
+            <devjobs-avatar service="google" username="netflix.com" size="32">
+            </devjobs-avatar>
+
+            <devjobs-avatar service="google" username="vercel.com" size="32">
+            </devjobs-avatar>
+
+
         </div>
 
     </header>
@@ -83,59 +100,62 @@
             <span id="filter-selected-value"></span>
         </section>
 
-        <h2>Resultados de la busqueda</h2>
+        <section>
 
-        <div class="jobs-listings">
+            <h2>Resultados de la busqueda</h2>
 
-            <!-- Aqui se insertan los empleos dinamicamente -->
+            <div class="jobs-listings">
 
-            <!-- <article data-technology="react" data-location="remoto" class="job-listing-card">
-                <div>
-                    <h3>Ingeniero de Software</h3>
-                    <small>Tech Solutions. | Remoto</small>
-                    <p>Buscamos un ingeniero de software con experiencia en desarrollo web y conocimientos en JavaScript, React y Node.js. El candidato ideal debe ser capaz de trabajar en equipo y tener buenas habilidades de comunicación.</p>
-                </div>
-                <button class="button-apply-job" id="boton-importante">Aplicar</button>
-            </article>
-            
-            <article  data-technology="python" data-location="ciudad-de-mexico" class="job-listing-card">
-                <div>
-                    <h3>Analista de Datos</h3>
-                    <small>Data Driven Co. | Ciudad de Mexico</small>
-                    <p>Estamos buscando un analista de datos con experiencia en el manejo de grandes conjuntos de datos y herramientas de visualización. Se requiere conocimiento en SQL, Python y R.</p>
-                </div>
-                <button class="button-apply-job" id="boton-importante">Aplicar</button>
-            </article>
+                <!-- Aqui se insertan los empleos dinamicamente -->
+                 <!-- fetch-data.js -->
 
-            <article data-technology="java" data-location="Miami" class="job-listing-card">
-                <div>
-                    <h3>Desarrollador de Aplicaciones Moviles</h3>
-                    <small>Mobile Apps Ltd. | Miami</small>
-                    <p>Buscamos un desarrollador de aplicaciones móviles con experiencia en iOS y/o Android. El candidato debe tener conocimientos en Java, Swift, Kotlin y el desarrollo de interfaces de usuario.</p>
-                </div>
-                <button class="button-apply-job" id="boton-importante">Aplicar</button>
-            </article>
-            
-            <article data-technology="node.js" data-location="remoto" class="job-listing-card">
-                <div>
-                    <h3>Ingeniero de DevOps</h3>
-                    <small>Cloud Services SA | Remoto</small>
-                    <p>Estamos buscando un ingeniero de DevOps con experiencia en la gestión de infraestructuras en la nube, automatización de procesos y herramientas de integración continua. Se requiere conocimiento en AWS, Azure o GCP.</p>
-                </div>
-                <button class="button-apply-job" id="boton-importante">Aplicar</button>
-            </article>     -->
-        </div>
+                <!-- <article data-technology="react" data-location="remoto" class="job-listing-card">
+                    <div>
+                        <h3>Ingeniero de Software</h3>
+                        <small>Tech Solutions. | Remoto</small>
+                        <p>Buscamos un ingeniero de software con experiencia en desarrollo web y conocimientos en JavaScript, React y Node.js. El candidato ideal debe ser capaz de trabajar en equipo y tener buenas habilidades de comunicación.</p>
+                    </div>
+                    <button class="button-apply-job" id="boton-importante">Aplicar</button>
+                </article>
+                
+                <article  data-technology="python" data-location="ciudad-de-mexico" class="job-listing-card">
+                    <div>
+                        <h3>Analista de Datos</h3>
+                        <small>Data Driven Co. | Ciudad de Mexico</small>
+                        <p>Estamos buscando un analista de datos con experiencia en el manejo de grandes conjuntos de datos y herramientas de visualización. Se requiere conocimiento en SQL, Python y R.</p>
+                    </div>
+                    <button class="button-apply-job" id="boton-importante">Aplicar</button>
+                </article>
 
-        <nav class="pagination">
-            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg></a>
-            <a class="is-active" href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 6l6 6l-6 6" /></svg></a>
-        </nav>
+                <article data-technology="java" data-location="Miami" class="job-listing-card">
+                    <div>
+                        <h3>Desarrollador de Aplicaciones Moviles</h3>
+                        <small>Mobile Apps Ltd. | Miami</small>
+                        <p>Buscamos un desarrollador de aplicaciones móviles con experiencia en iOS y/o Android. El candidato debe tener conocimientos en Java, Swift, Kotlin y el desarrollo de interfaces de usuario.</p>
+                    </div>
+                    <button class="button-apply-job" id="boton-importante">Aplicar</button>
+                </article>
+                
+                <article data-technology="node.js" data-location="remoto" class="job-listing-card">
+                    <div>
+                        <h3>Ingeniero de DevOps</h3>
+                        <small>Cloud Services SA | Remoto</small>
+                        <p>Estamos buscando un ingeniero de DevOps con experiencia en la gestión de infraestructuras en la nube, automatización de procesos y herramientas de integración continua. Se requiere conocimiento en AWS, Azure o GCP.</p>
+                    </div>
+                    <button class="button-apply-job" id="boton-importante">Aplicar</button>
+                </article>     -->
+            </div>
 
+            <nav class="pagination">
+                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg></a>
+                <a class="is-active" href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 6l6 6l-6 6" /></svg></a>
+            </nav>
+        </section>
     </main>
 
     <footer >

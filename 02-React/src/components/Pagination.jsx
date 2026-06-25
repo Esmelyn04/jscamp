@@ -1,3 +1,5 @@
+import styles from './Pagination.module.css'
+
 export function Pagination ({ currentPage = 1, totalPages = 10, onPageChange }) {
 
     const pages = Array.from({ length: totalPages }, (_, index) => index + 1)
@@ -28,7 +30,7 @@ export function Pagination ({ currentPage = 1, totalPages = 10, onPageChange }) 
     }
 
     return (
-        <nav className="pagination">
+        <nav className={styles.pagination}>
             
             <a href="#" style={stylePrevButton} onClick={handlePrevClick}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left">
@@ -38,7 +40,7 @@ export function Pagination ({ currentPage = 1, totalPages = 10, onPageChange }) 
             </a>
             
             {pages.map((page) => (
-                <a key={page} className={page === currentPage ? "is-active" : ""} href="#" 
+                <a key={page} className={page === currentPage ? styles.isActive : ""} href="#" 
                    onClick={(event) => handlePageChange(event, page)}>
                     {page}
                 </a>

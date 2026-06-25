@@ -1,10 +1,41 @@
-export function SearchFormSection() {
+import { useId } from "react"
+
+export function SearchFormSection({ onSearch, onTextFilter }) {
+
+    const idText = useId()
+    const idTechnology = useId()
+    const idLocation = useId()
+    const idExperienceLevel = useId()
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        
+        const formData = new FormData(event.target)
+
+        const filters = {
+            technology: formData.get(idTechnology),
+            location: formData.get(idLocation),
+            experienceLevel: formData.get(idExperienceLevel)
+        }
+
+        onSearch(filters)
+
+
+
+    console.log("Filtros aplicados:", filters)
+    }
+
+    const handleTextChange = (event) => {
+        const text = event.target.value
+        onTextFilter(text)
+    }
+
     return (
         <section className="jobs-search">
                 <h1>Encuentra tu proximo trabajo</h1>
                 <p>Explorar miles de oportunidades en el sector tecnologico.</p>
 
-                <form role="search" id="empleos-search-form">
+                <form onSubmit={handleSubmit} role="search" id="empleos-search-form">
                     <div className="search-bar">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"
@@ -13,11 +44,17 @@ export function SearchFormSection() {
                             <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
                             <path d="M21 21l-6 -6" />
                         </svg>
-                        <input  id="empleos-search-input" required type="text" placeholder="Buscar trabajos, empresas o habilidades"/>
+                        
+                        <input  name={idText} id="empleos-search-input" type="text" 
+                            placeholder="Buscar trabajos, empresas o habilidades"
+                            onChange={handleTextChange} />
+                        
+                        <button type="submit" id="empleos-search-button"> Buscar</button>
+                        
                     </div>
                 
                     <div className="search-filters">
-                        <select name="technology" id="filter-technology">
+                        <select name={idTechnology} id="filter-technology">
                             <option value="">Tecnología</option>
                             <optgroup label="Tecnologías populares">
                             <option value="javascript">JavaScript</option>
@@ -35,7 +72,7 @@ export function SearchFormSection() {
                             <option value="php">PHP</option>
                         </select>
 
-                        <select name="location" id="filter-location">
+                        <select name={idLocation} id="filter-location">
                             <option value="">Ubicación</option>
                             <option value="remoto">Remoto</option>
                             <option value="cdmx">Ciudad de México</option>
@@ -44,7 +81,7 @@ export function SearchFormSection() {
                             <option value="barcelona">Barcelona</option>
                         </select>
 
-                        <select name="experience-level" id="filter-experience-level">
+                        <select name={idExperienceLevel} id="filter-experience-level">
                             <option value="">Nivel de experiencia</option>
                             <option value="junior">Junior</option>
                             <option value="mid">Mid-level</option>

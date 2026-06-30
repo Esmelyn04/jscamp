@@ -5,7 +5,7 @@ import { JobCard } from './JobCard'
 export function JobListings({ jobs }) {
     return (
         <>
-            <h2>Resultados de la busqueda</h2>
+            <h2 style={{ textAlign: 'center' }}>Resultados de la busqueda</h2>
 
             <div className="jobs-listings">
                 {jobs.map((job) => (

@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react'
 import "../index.css"
 import { SearchFormSection } from '../components/SearchFormSection.jsx'
 import { JobListings } from '../components/JobListings.jsx'
-import { Pagination } from '../components/Pagination.jsx'
-import jobsData from '../data.json' 
+import { Pagination } from '../components/Pagination.jsx' 
 
 const RESULTS_PER_PAGE = 4
 
-export function SearchPage() {
+const useFilters = () => {
   const [filters, setFilters] = useState({
     technology: '',
     location: '',
@@ -16,22 +15,46 @@ export function SearchPage() {
   const [textToFilter, setTextToFilter] = useState("")
   const  [currentPage, setCurrentPage] = useState(1)
 
-  const jobsFilteredByFilters = jobsData.filter(job => {
-    return (
-      (filters.technology === '' || job.data.technology === filters.technology)
-    )
-  })
+  const [jobs, setJobs] = useState([])
+  const [total, setTotal] = useState(0)
+  const [loading, setLoading] = useState(true)
 
-  const jobsWithTextFilter = textToFilter === '' ? jobsFilteredByFilters : jobsFilteredByFilters.filter(job => {
-    return job.titulo.toLowerCase().includes(textToFilter.toLowerCase()) 
-  })
+  useEffect(() => {
+    async function fetchJobs(){
+      try {
+        setLoading(true)
 
-  const totalPages = Math.ceil(jobsWithTextFilter.length / RESULTS_PER_PAGE)
+        const params = new URLSearchParams()
+        if (textToFilter) params.append('text', textToFilter)
+        if (filters.technology) params.append('technology', filters.technology)
+        if (filters.location) params.append('type', filters.location)
+        if (filters.experienceLevel) params.append('level', filters.experienceLevel)
 
-  const pageResults = jobsWithTextFilter.slice(
-    (currentPage - 1) * RESULTS_PER_PAGE,
-    currentPage * RESULTS_PER_PAGE
-  )
+        const offSet = (currentPage - 1) * RESULTS_PER_PAGE
+        params.append('limit', RESULTS_PER_PAGE)
+        params.append('offset', offSet)
+
+        const queryParams = params.toString()
+        
+        const response =  await fetch(`https://jscamp-api.vercel.app/api/jobs?${queryParams}`)
+        const json = await response.json()
+
+        setJobs(json.data)
+        setTotal(json.total)
+
+      } catch (error){
+        console.log('Error fetching jobs: ', error)
+
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchJobs()
+  }, [filters, textToFilter, currentPage])
+
+
+  const totalPages = Math.ceil(total / RESULTS_PER_PAGE)
 
   const handlePageChange = (page) => {
     setCurrentPage(page)
@@ -47,18 +70,48 @@ export function SearchPage() {
     setCurrentPage(1)
   }
 
-  useEffect(() => {
-    console.log('effect -> currentPage changed:', currentPage)
-  }, [currentPage, textToFilter])
+  return {
+    loading,
+    jobs,
+    total,
+    totalPages,
+    currentPage,
+    handlePageChange,
+    handleSearch,
+    handleTextFilter,
+  }
+}
+
+export function SearchPage() {
+
+  const { 
+    jobs,
+    total,
+    loading, 
+    totalPages, 
+    currentPage, 
+    handlePageChange, 
+    handleSearch, 
+    handleTextFilter 
+  } = useFilters()
+
+  const title = `Resultado: ${total}, Pagina ${currentPage} - DevJobs`
 
   return (
   <>
     <main>
+      <title>{title}</title>
       <SearchFormSection onSearch={handleSearch} onTextFilter={handleTextFilter} />
-
+      
         <section>
+          <h2 style={{ textAlign: 'center' }}>Resultados de la busqueda</h2>
+          
+          {
+            loading ? <p>Cargando empleos...</p> : 
+            <JobListings jobs={jobs}/>
+          }
+          {/* <JobListings jobs={jobs} /> */}
 
-          <JobListings jobs={pageResults} />
           <Pagination  
             currentPage={currentPage} 
             totalPages={totalPages} 

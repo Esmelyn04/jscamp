@@ -1,7 +1,10 @@
-import { useId, useState } from "react"
+import { useId, useState, useRef } from "react"
 
-const useSearchForm = ({ idTechnology, idLocation, idExperienceLevel, onSearch, onTextFilter }) => {
+const useSearchForm = ({ idTechnology, idLocation, idExperienceLevel, idText, onSearch, onTextFilter }) => {
+
+    const timeoutId = useRef(null)
     const [searchText, setSearchText] = useState("")
+
     const handleSubmit = (event) => {
         event.preventDefault()
     
@@ -9,6 +12,10 @@ const useSearchForm = ({ idTechnology, idLocation, idExperienceLevel, onSearch, 
         // event.target es el elemento que disparó el evento
         // event.currentTarget es el elemento al que se le asignó el evento
         const formData = new FormData(event.currentTarget)
+
+        if(event.target.name ===  idText) {
+            return
+        }
 
         const filters = {
             technology: formData.get(idTechnology),
@@ -21,11 +28,21 @@ const useSearchForm = ({ idTechnology, idLocation, idExperienceLevel, onSearch, 
 
     const handleTextChange = (event) => {
         const text = event.target.value
-        setSearchText(text)
-        onTextFilter(text)
+        setSearchText(text) // actualizamos el input inmediatamente
+
+        // DEBOUNCE: cancelar el timeout anterior
+        if (timeoutId.current) {
+            clearTimeout(timeoutId.current)
+        }
+
+        timeoutId.current = setTimeout(()=> {
+            onTextFilter(text)
+        }, 500)
+        
     }
 
-    return {  
+    return {
+        searchText,  
         handleSubmit, 
         handleTextChange 
     }
@@ -36,19 +53,28 @@ export function SearchFormSection({ onSearch, onTextFilter }) {
     const idTechnology = useId()
     const idLocation = useId()
     const idExperienceLevel = useId()
+
+    const inputRef = useRef()
+
     const {  
         handleSubmit, 
         handleTextChange 
-    } = useSearchForm({ idTechnology, idLocation, idExperienceLevel, onSearch, onTextFilter })
+    } = useSearchForm({ idTechnology, idLocation, idExperienceLevel, idText ,onSearch, onTextFilter })
 
 
+    const handleClearInput = (event) => {
+        event.preventDefault()
 
+        inputRef.current.value = ""
+        onTextFilter("")
+    }
     return (
         <section className="jobs-search">
                 <h1>Encuentra tu proximo trabajo</h1>
                 <p>Explorar miles de oportunidades en el sector tecnologico.</p>
 
                 <form onChange={handleSubmit} role="search" id="empleos-search-form">
+
                     <div className="search-bar">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"
@@ -58,9 +84,15 @@ export function SearchFormSection({ onSearch, onTextFilter }) {
                             <path d="M21 21l-6 -6" />
                         </svg>
                         
-                        <input  name={idText} id="empleos-search-input" type="text" 
+                        <input
+                            ref={inputRef}  
+                            name={idText} id="empleos-search-input" type="text" 
                             placeholder="Buscar trabajos, empresas o habilidades"
-                            onChange={handleTextChange} />
+                            onChange={handleTextChange} 
+                        />
+
+                        <button onClick={handleClearInput}>✖︎</button>
+                        
                         
                         {/* <button type="submit" id="empleos-search-button"> Buscar</button> */}
                         

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import "./index.css"
 
 import { Header } from './components/Header.jsx'
 import { Footer } from './components/Footer.jsx'

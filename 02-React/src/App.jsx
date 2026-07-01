@@ -8,9 +8,7 @@ import { HomePage } from './pages/Home.jsx'
 import { SearchPage } from './pages/Search.jsx'
 import { Route } from './components/Route.jsx'
 
-
 function App() {
-
   return (
     <>
       <Header />

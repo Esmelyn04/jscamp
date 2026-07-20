@@ -22,7 +22,7 @@ function JobSection ({ title, content}) {
   )
 }
 
-export function JobDetail() {
+export  default function JobDetail() {
   const { jobId } = useParams()
   const navigate = useNavigate()
 

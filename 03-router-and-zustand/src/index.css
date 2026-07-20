@@ -506,6 +506,7 @@ article {
 }
 
 .nav-link-active {
-  color: yellow;
+  /* color: yellow; */
   pointer-events: none;
+  opacity: 0.75;
 }

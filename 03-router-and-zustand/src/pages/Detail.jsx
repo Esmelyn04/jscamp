@@ -22,7 +22,52 @@ function JobSection ({ title, content}) {
   )
 }
 
-export  default function JobDetail() {
+function DetailPageBreadCrumb({ job }) {
+  return (
+      <div className={styles.container}>
+        <nav className={styles.breadcrumb}>
+          <Link 
+            href="/search"
+            className={styles.breadcrumbButton}
+          >
+            Empleos
+          </Link>
+          <span className={styles.breadcrumbSeparator}>/</span>
+          <span className={styles.breadcrumbCurrent}>{job.titulo}</span>
+        </nav>
+      </div>
+  )
+}
+
+function DetailApplyButton ({ isLoggedIn }) {
+  return (
+    <button disabled={!isLoggedIn} className={styles.applyButton}>
+      {isLoggedIn ? 'Aplicar ahora' : 'Inicia sesión para aplicar'}
+    </button>
+  )
+}
+
+function DetailPageHeader({ job, isLoggedIn, children }) {
+  return (
+    <>
+      <header className={styles.header}>
+          <h1 className={styles.title}>
+            {job.titulo}
+          </h1>
+          <p className={styles.meta}>
+            {job.empresa} · {job.ubicacion}
+          </p>
+      </header>
+
+      {children}
+
+
+        
+    </>
+  )
+}
+
+export  default function JobDetail({ isLoggedIn }) {
   const { jobId } = useParams()
   const navigate = useNavigate()
 
@@ -79,31 +124,12 @@ export  default function JobDetail() {
 
   return (
     <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
-      <div className={styles.container}>
-        <nav className={styles.breadcrumb}>
-          <Link 
-            href="/search"
-            className={styles.breadcrumbButton}
-          >
-            Empleos
-          </Link>
-          <span className={styles.breadcrumbSeparator}>/</span>
-          <span className={styles.breadcrumbCurrent}>{job.titulo}</span>
-        </nav>
-      </div>
+      <DetailPageBreadCrumb job={job} />
+      <DetailPageHeader job={job}>
+        <DetailApplyButton isLoggedIn={isLoggedIn} />
+      </DetailPageHeader>
 
-      <header className={styles.header}>
-        <h1 className={styles.title}>
-          {job.titulo}
-        </h1>
-        <p className={styles.meta}>
-          {job.empresa} · {job.ubicacion}
-        </p>
-      </header>
-
-      <button className={styles.applyButton}>
-        Aplicar ahora
-      </button>
+      
 
       <JobSection title="Descripción del puesto" content={job.content.description} />
       <JobSection title="Responsabilidades" content={job.content.responsibilities} />

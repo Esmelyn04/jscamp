@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router'
 import { Link } from '../components/Link.jsx'
 import snarkdown from 'snarkdown'
 import styles from './Detail.module.css'
+import { useAuth } from '../context/AuthContext.jsx'
 
 function JobSection ({ title, content}) {
   const html = snarkdown(content)
@@ -39,7 +40,9 @@ function DetailPageBreadCrumb({ job }) {
   )
 }
 
-function DetailApplyButton ({ isLoggedIn }) {
+function DetailApplyButton () {
+  const { isLoggedIn } = useAuth()
+
   return (
     <button disabled={!isLoggedIn} className={styles.applyButton}>
       {isLoggedIn ? 'Aplicar ahora' : 'Inicia sesión para aplicar'}
@@ -47,7 +50,7 @@ function DetailApplyButton ({ isLoggedIn }) {
   )
 }
 
-function DetailPageHeader({ job, isLoggedIn, children }) {
+function DetailPageHeader({ job}) {
   return (
     <>
       <header className={styles.header}>
@@ -59,15 +62,12 @@ function DetailPageHeader({ job, isLoggedIn, children }) {
           </p>
       </header>
 
-      {children}
-
-
-        
+      <DetailApplyButton />
     </>
   )
 }
 
-export  default function JobDetail({ isLoggedIn }) {
+export  default function JobDetail() {
   const { jobId } = useParams()
   const navigate = useNavigate()
 
@@ -125,9 +125,7 @@ export  default function JobDetail({ isLoggedIn }) {
   return (
     <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
       <DetailPageBreadCrumb job={job} />
-      <DetailPageHeader job={job}>
-        <DetailApplyButton isLoggedIn={isLoggedIn} />
-      </DetailPageHeader>
+      <DetailPageHeader job={job} />
 
       
 

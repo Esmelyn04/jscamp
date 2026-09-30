@@ -8,10 +8,6 @@ import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <AuthProvider>
-      <FavoritesProvider>
-        <App />
-      </FavoritesProvider>
-    </AuthProvider>
+    <App />
   </BrowserRouter>,
 )

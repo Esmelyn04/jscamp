@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router'
-import { Link } from '../components/Link.jsx'
+import { useState, useEffect } from "react"
+import { useParams, useNavigate } from "react-router"
+import { Link } from "../components/Link"
 import snarkdown from 'snarkdown'
 import styles from './Detail.module.css'
-import { useAuthStore } from '../store/authStore.js'
+import { useAuthStore } from "../store/authStore"
+import { useFavoritesStore } from "../store/favoritesStore"
 
-function JobSection ({ title, content}) {
+function JobSection ({ title, content }) {
   const html = snarkdown(content)
 
   return (
@@ -14,29 +15,49 @@ function JobSection ({ title, content}) {
         {title}
       </h2>
 
-      <div className={`${styles.sectionContent} prose`} 
-      dangerouslySetInnerHTML={{ 
-        __html: html 
-        }} />
+      <div
+        className={`${styles.sectionContent} prose`}
+        dangerouslySetInnerHTML={{
+          __html: html
+        }}
+      />
 
     </section>
   )
 }
 
-function DetailPageBreadCrumb({ job }) {
+function DetailPageBreadCrumb ({ job }) {
   return (
-      <div className={styles.container}>
-        <nav className={styles.breadcrumb}>
-          <Link 
-            href="/search"
-            className={styles.breadcrumbButton}
-          >
-            Empleos
-          </Link>
-          <span className={styles.breadcrumbSeparator}>/</span>
-          <span className={styles.breadcrumbCurrent}>{job.titulo}</span>
-        </nav>
-      </div>
+    <div className={styles.container}>
+      <nav className={styles.breadcrumb}>
+        <Link 
+          href="/search"
+          className={styles.breadcrumbButton}
+        >
+          Empleos
+        </Link>
+        <span className={styles.breadcrumbSeparator}>/</span>
+        <span className={styles.breadcrumbCurrent}>{job.titulo}</span>
+      </nav>
+    </div>
+  )
+}
+
+function DetailPageHeader ({ job }) {
+  return (
+    <>
+      <header className={styles.header}>
+        <h1 className={styles.title}>
+          {job.titulo}
+        </h1>
+        <p className={styles.meta}>
+          {job.empresa} · {job.ubicacion}
+        </p>
+      </header>
+
+      <DetailApplyButton />
+      <DetailFavoriteButton jobId={job.id} />
+    </>
   )
 }
 
@@ -45,29 +66,25 @@ function DetailApplyButton () {
 
   return (
     <button disabled={!isLoggedIn} className={styles.applyButton}>
-      {isLoggedIn ? 'Aplicar ahora' : 'Inicia sesión para aplicar'}
+      {isLoggedIn ? "Aplicar ahora" : "Inicia sesión para aplicar"}
     </button>
   )
 }
 
-function DetailPageHeader({ job}) {
-  return (
-    <>
-      <header className={styles.header}>
-          <h1 className={styles.title}>
-            {job.titulo}
-          </h1>
-          <p className={styles.meta}>
-            {job.empresa} · {job.ubicacion}
-          </p>
-      </header>
+function DetailFavoriteButton ({ jobId }) {
+  const { isFavorite, toggleFavorite } = useFavoritesStore()
 
-      <DetailApplyButton />
-    </>
+  return (
+    <button
+      onClick={() => toggleFavorite(jobId)}
+      aria-label={isFavorite(jobId) ? 'Remove from favorites' : 'Add to favorites'}
+    >
+      {isFavorite(jobId) ? '❤️' : '🤍'}
+    </button>
   )
 }
 
-export  default function JobDetail() {
+export default function JobDetail () {
   const { jobId } = useParams()
   const navigate = useNavigate()
 
@@ -78,28 +95,29 @@ export  default function JobDetail() {
   useEffect(() => {
     fetch(`https://jscamp-api.vercel.app/api/jobs/${jobId}`)
       .then(response => {
-        if (!response.ok) throw new Error('Job Not Found')
+        if (!response.ok) {
+          navigate('/not-found')
+        }
+
         return response.json()
       })
       .then(json => {
         setJob(json)
       })
-      .catch(error => {
-        setError(error.message)
+      .catch(err => {
+        setError(err.message)
       })
-      .finally(() => { 
+      .finally(() => {
         setLoading(false)
       })
-    }, [jobId])
+  }, [jobId])
 
   if (loading) {
-    return (
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
-        <div className={styles.loading}>
-          <p className={styles.loadingText}>Cargando...</p>
-        </div>
+    return <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
+      <div className={styles.loading}>
+        <p className={styles.loadingText}>Cargando...</p>
       </div>
-    )
+    </div>
   }
 
   if (error || !job) {
@@ -120,20 +138,15 @@ export  default function JobDetail() {
     )
   }
 
-
-
   return (
     <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
       <DetailPageBreadCrumb job={job} />
       <DetailPageHeader job={job} />
 
-      
-
       <JobSection title="Descripción del puesto" content={job.content.description} />
       <JobSection title="Responsabilidades" content={job.content.responsibilities} />
       <JobSection title="Requisitios" content={job.content.requirements} />
       <JobSection title="Acerca de la empresa" content={job.content.about} />
-
     </div>
   )
 }

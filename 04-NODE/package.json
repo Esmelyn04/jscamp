@@ -1,4 +1,7 @@
 {
   "name": "my-project",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "ms": "^2.1.3"
+  }
 }

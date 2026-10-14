@@ -95,3 +95,7 @@ server.listen(port, () => {
   const address = server.address()
   console.log(`Servidor escuchando en http://localhost:${address.port}`)
 })
+
+// --watch allow the server to restart automatically when changes are made to the code. 
+// This is useful for development purposes, as it saves time by not having to manually stop and start the server after each change.
+// node --watch server.js

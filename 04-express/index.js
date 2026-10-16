@@ -9,6 +9,7 @@ app.use((req, res, next) => {
   next();
 });
 
+// middleware function to add in a route
 const previousHOmeMiddleware = (req, res, next) => {
   console.log("This is the previous home / middleware");
   next();

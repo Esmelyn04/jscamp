@@ -11,7 +11,7 @@ app.use((req, res, next) => {
 
 // middleware function to add in a route
 const previousHOmeMiddleware = (req, res, next) => {
-  console.log("This is the previous home / middleware");
+  // console.log("This is the previous home / middleware");
   next();
 }
 
@@ -25,6 +25,47 @@ app.get('/health', (req, res) => {
     uptime: process.uptime()
   });
 });
+
+app.get('/get-jobs', (req, res) => {
+  return res.json({
+    jobs: [
+      { id: 1, title: "Software Engineer"},
+      { id: 2, title: "Data Scientist"},
+      { id: 3, title: "Product Manager"}
+    ]
+  });
+})
+
+app.get('/get-single-job/:id', (req, res) => {
+  const { id } = req.params;
+
+  const IdNumber = Number(id);
+
+  return res.json({
+    job: { id: IdNumber, title: `Job Title ${id}` }
+  });
+})
+
+// optional -> /acd or /abcd
+app.get('/a{b}cd', (req, res) => {
+  return res.send('abcd or acd')
+})
+
+// Comodín
+app.get('/bb*bb', (req, res) => {
+  return res.send('bb*bb')
+})
+
+// Rutas más largas que no sabes como terminan
+app.get('/file/*filename', (req, res) => {
+  return res.send('file/*')
+})
+
+// Usar Regex
+app.get(/.*fly$/, (req, res) => {
+  return res.send('Terminando en fly')
+})
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);

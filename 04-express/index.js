@@ -1,5 +1,6 @@
 import  express  from "express";
 import jobs from "./jobs.json" with { type: "json" };
+import { DEFAULTS } from "./confid.js";
 
 const app = express();
 const PORT = process.env.PORT || 1234;
@@ -28,7 +29,31 @@ app.get('/health', (req, res) => {
 });
 
 app.get('/get-jobs', (req, res) => {
-  return res.json(jobs);
+  const { text, title, level, limit = DEFAULTS.LIMIT_PAGINATION, technology, offset = DEFAULTS.LIMIT_OFFSET } = req.query;
+
+  let filteredJobs = jobs;
+
+  if (text) {
+    const searchTerm = text.toLowerCase()
+    console.log("Searching for jobs with text:", searchTerm);
+    filteredJobs = filteredJobs.filter(job =>
+      job.titulo.toLowerCase().includes(searchTerm) ||
+      job.descripcion.toLowerCase().includes(searchTerm)
+    );
+  }
+
+  if (technology) {
+    filteredJobs = filteredJobs.filter(job =>
+      job.tecnologias.includes(technology)
+    );
+  }
+
+  const limitNumber = Number(limit)
+  const offsetNumber = Number(offset)
+
+  const paginatedJobs = filteredJobs.slice(offsetNumber, offsetNumber + limitNumber);
+
+  return res.json(paginatedJobs)
 });
 
 

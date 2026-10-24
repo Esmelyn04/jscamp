@@ -28,7 +28,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-app.get('/get-jobs', (req, res) => {
+app.get('/jobs', (req, res) => {
   const { text, title, level, limit = DEFAULTS.LIMIT_PAGINATION, technology, offset = DEFAULTS.LIMIT_OFFSET } = req.query;
 
   let filteredJobs = jobs;
@@ -56,8 +56,8 @@ app.get('/get-jobs', (req, res) => {
   return res.json(paginatedJobs)
 });
 
-
-app.get('/get-single-job/:id', (req, res) => {
+// Idempotent route, can be called multiple times with the same result
+app.get('/jobs/:id', (req, res) => {
   const { id } = req.params;
 
   const IdNumber = Number(id);
@@ -66,6 +66,25 @@ app.get('/get-single-job/:id', (req, res) => {
     job: { id: IdNumber, title: `Job Title ${id}` }
   });
 })
+// No idempotent route, calling it multiple times will create multiple jobs
+app.post('/jobs', (req, res) => {
+  // TODO
+  
+})
+
+// Reemplace the entire job with the new data
+app.put('/jobs/:id', (req, res) => {
+  // TODO
+})
+
+// Update only the fields that are provided in the request body
+app.patch('/jobs/:id', (req, res) => {
+  // TODO
+})
+
+app.delete('/jobs/:id', (req, res) => {
+  // TODO
+})  
 
 // optional -> /acd or /abcd
 app.get('/a{b}cd', (req, res) => {

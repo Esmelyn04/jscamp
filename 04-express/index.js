@@ -28,6 +28,8 @@ app.get('/health', (req, res) => {
   });
 });
 
+// CRUD: Create, Read, Update, Delete
+
 app.get('/jobs', (req, res) => {
   const { text, title, level, limit = DEFAULTS.LIMIT_PAGINATION, technology, offset = DEFAULTS.LIMIT_OFFSET } = req.query;
 
@@ -60,12 +62,14 @@ app.get('/jobs', (req, res) => {
 app.get('/jobs/:id', (req, res) => {
   const { id } = req.params;
 
-  const IdNumber = Number(id);
+  const job = jobs.find(job => job.id === id)
 
-  return res.json({
-    job: { id: IdNumber, title: `Job Title ${id}` }
-  });
-})
+  if (!job) {
+    return res.status(404).json({ error: "Job not found" });
+  }
+
+  return res.json(job);
+});
 // No idempotent route, calling it multiple times will create multiple jobs
 app.post('/jobs', (req, res) => {
   // TODO
@@ -85,27 +89,6 @@ app.patch('/jobs/:id', (req, res) => {
 app.delete('/jobs/:id', (req, res) => {
   // TODO
 })  
-
-// optional -> /acd or /abcd
-app.get('/a{b}cd', (req, res) => {
-  return res.send('abcd or acd')
-})
-
-// Comodín
-app.get('/bb*bb', (req, res) => {
-  return res.send('bb*bb')
-})
-
-// Rutas más largas que no sabes como terminan
-app.get('/file/*filename', (req, res) => {
-  return res.send('file/*')
-})
-
-// Usar Regex
-app.get(/.*fly$/, (req, res) => {
-  return res.send('Terminando en fly')
-})
-
 
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);

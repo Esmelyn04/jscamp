@@ -5,6 +5,8 @@ import { DEFAULTS } from "./confid.js";
 const app = express();
 const PORT = process.env.PORT || 1234;
 
+app.use(express.json()); // Middleware to parse JSON request bodies
+
 app.use((req, res, next) => {
   const timeString = new Date().toLocaleTimeString();
   console.log(`[${timeString}] ${req.method} ${req.url}`);
@@ -72,7 +74,19 @@ app.get('/jobs/:id', (req, res) => {
 });
 // No idempotent route, calling it multiple times will create multiple jobs
 app.post('/jobs', (req, res) => {
-  // TODO
+  const { titulo, empresa, ubicacion, data } = req.body;
+  
+  const newJob = {
+    id: crypto.randomUUID(),
+    titulo,
+    empresa,
+    ubicacion,
+    data
+  }
+
+  jobs.push(newJob); // lo haremos en una base de datos con un INSERT
+
+  return res.status(201).json(newJob);
   
 })
 

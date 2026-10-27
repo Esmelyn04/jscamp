@@ -33,6 +33,7 @@ app.get('/health', (req, res) => {
 // CRUD: Create, Read, Update, Delete
 
 app.get('/jobs', (req, res) => {
+  res.header('Access-Control-Allow-Origin', "http://localhost:5173");
   const { text, title, level, limit = DEFAULTS.LIMIT_PAGINATION, technology, offset = DEFAULTS.LIMIT_OFFSET } = req.query;
 
   let filteredJobs = jobs;
@@ -57,7 +58,8 @@ app.get('/jobs', (req, res) => {
 
   const paginatedJobs = filteredJobs.slice(offsetNumber, offsetNumber + limitNumber);
 
-  return res.json(paginatedJobs)
+  // return res.json(paginatedJobs)
+  return res.json({ data: paginatedJobs, total: filteredJobs.length, limit: limitNumber, offset: offsetNumber });
 });
 
 // Idempotent route, can be called multiple times with the same result

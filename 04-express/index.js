@@ -2,7 +2,7 @@ import  express  from "express";
 import cors from "cors";
 
 import jobs from "./jobs.json" with { type: "json" };
-import { DEFAULTS } from "./confid.js";
+import { DEFAULTS } from "./config.js";
 
 const app = express();
 // const PORT = process.env.PORT || 1234;

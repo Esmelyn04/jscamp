@@ -1,9 +1,30 @@
 import  express  from "express";
+import cors from "cors";
+
 import jobs from "./jobs.json" with { type: "json" };
 import { DEFAULTS } from "./confid.js";
 
 const app = express();
-const PORT = process.env.PORT || 1234;
+// const PORT = process.env.PORT || 1234;
+const PORT = process.env.PORT ?? DEFAULTS.PORT;
+
+const ACCEPTED_ORIGINS = [
+  "http://localhost:3000",
+  "http://localhost:5173"
+];
+
+// app.use(cors())
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
+        return callback(null, true);
+      } 
+      return callback(new Error("Origen no permitido por CORS"));
+    }
+  })
+);
 
 app.use(express.json()); // Middleware to parse JSON request bodies
 
@@ -33,7 +54,6 @@ app.get('/health', (req, res) => {
 // CRUD: Create, Read, Update, Delete
 
 app.get('/jobs', (req, res) => {
-  res.header('Access-Control-Allow-Origin', "http://localhost:5173");
   const { text, title, level, limit = DEFAULTS.LIMIT_PAGINATION, technology, offset = DEFAULTS.LIMIT_OFFSET } = req.query;
 
   let filteredJobs = jobs;
@@ -42,8 +62,7 @@ app.get('/jobs', (req, res) => {
     const searchTerm = text.toLowerCase()
     console.log("Searching for jobs with text:", searchTerm);
     filteredJobs = filteredJobs.filter(job =>
-      job.titulo.toLowerCase().includes(searchTerm) ||
-      job.descripcion.toLowerCase().includes(searchTerm)
+      job.titulo.toLowerCase().includes(searchTerm) || job.descripcion.toLowerCase().includes(searchTerm)
     );
   }
 

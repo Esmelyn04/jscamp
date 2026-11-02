@@ -13,6 +13,12 @@ app.use(express.json()); // Middleware to parse JSON request bodies
 
 app.use('/jobs', jobsRouter)
 
-app.listen(PORT, () => {
-  console.log(`Server listening on http://localhost:${PORT}`);
-});
+
+// if (process.env.NODE_ENV !== "production" && process.env.NODE_ENV !== "test") {
+if (!process.env.NODE_ENV) {
+  app.listen(PORT, () => {
+    console.log(`Server listening on http://localhost:${PORT}`);
+  });
+}
+
+export default app;

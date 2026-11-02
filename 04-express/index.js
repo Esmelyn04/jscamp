@@ -68,7 +68,7 @@ app.get('/jobs', (req, res) => {
 
   if (technology) {
     filteredJobs = filteredJobs.filter(job =>
-      job.tecnologias.includes(technology)
+      job.technology.includes(technology)
     );
   }
 
